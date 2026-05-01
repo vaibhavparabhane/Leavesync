@@ -1,0 +1,38 @@
+# ── Frontend ──────────────────────────────
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# ── Backend ───────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Test / Coverage (auto-generated, never commit)
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# Logs (auto-generated)
+logs/
+*.log
+
+# ── Environment / Secrets ─────────────────
+.env
+.env.local
+.env*.local
+
+# ── OS / IDE ──────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ── Misc ──────────────────────────────────
+*.tsbuildinfo
+packages.microsoft.gpg
