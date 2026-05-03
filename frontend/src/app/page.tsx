@@ -98,9 +98,7 @@ export default function LoginPage() {
           <Card sx={{ borderRadius: 4, overflow: 'hidden', boxShadow: 6 }}>
             <CardContent sx={{ p: { xs: 4, sm: 6 }, display: 'flex', flexDirection: 'column', gap: 3 }}>
               <Box display="flex" justifyContent="center" mb={1}>
-                <Typography variant="h4" fontWeight="bold" color="primary">
-                  NexusPulse
-                </Typography>
+                <Image src="/logo.png" alt="LeaveSync" width={180} height={60} style={{ objectFit: 'contain' }} />
               </Box>
 
               <Typography variant="body1" color="textSecondary" textAlign="center">
@@ -175,9 +173,6 @@ export default function LoginPage() {
               <Button
                 fullWidth
                 variant="outlined"
-                startIcon={
-                  <Image src="/google-logo.png" alt="Google" width={20} height={20} />
-                }
                 size="large"
                 onClick={handleGoogleLogin}
                 sx={{
@@ -189,6 +184,7 @@ export default function LoginPage() {
                   '&:hover': { backgroundColor: '#f5f5f5', borderColor: '#aaa' },
                 }}
               >
+                <Image src="/google-logo.png" alt="Google" width={20} height={20} style={{ marginRight: 8 }} />
                 Continue with Google
               </Button>
             </CardContent>

@@ -15,7 +15,7 @@ import { useAuth } from '@/context/AuthContext';
 import { APP_CONSTANTS, ROLE_GROUPS } from '@/config/constants';
 
 function extractData(result: any) {
-  return result.data?.data || result.data || [];
+  return Array.isArray(result.data) ? result.data : (result.data?.data || result.data || []);
 }
 
 export default function ApplyLeavePage() {

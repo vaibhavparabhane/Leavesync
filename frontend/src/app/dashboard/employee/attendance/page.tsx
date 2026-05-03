@@ -56,7 +56,7 @@ export default function AttendancePage() {
       setError('');
 
       // Get user's ID from stored user data
-      const storedUser = JSON.parse(sessionStorage.getItem('nexuspulse_user') || '{}');
+      const storedUser = JSON.parse(sessionStorage.getItem('leavesync_user') || '{}');
       const userId = storedUser.id;
       
       // Fetch holidays assigned to this specific employee from employee_holidays table

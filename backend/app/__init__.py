@@ -55,8 +55,8 @@ def create_app():
     swagger_template = {
         "swagger": "2.0",
         "info": {
-            "title": "NexusPulse ALMS API",
-            "description": "API documentation for NexusPulse Attendance and Leave Management System",
+                "title": "LeaveSync API",
+            "description": "API documentation for LeaveSync - Leave Management System",
             "version": "1.0.0"
         },
         "securityDefinitions": {

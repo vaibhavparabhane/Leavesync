@@ -3,7 +3,7 @@ import json
 import time
 import os
 import uuid
-from logging.handlers import RotatingFileHandler, TimedRotatingFileHandler
+from logging.handlers import RotatingFileHandler
 from datetime import datetime
 from flask import request, g
 from flask_jwt_extended import get_jwt_identity
@@ -72,12 +72,11 @@ class AppLogger:
         logger.setLevel(logging.INFO)
         logger.handlers.clear()
         
-        # Daily rotating logs
-        handler = TimedRotatingFileHandler(
+        # Size-based rotating logs (Windows compatible)
+        handler = RotatingFileHandler(
             f'{log_dir}/access.log',
-            when='midnight',
-            interval=1,
-            backupCount=30
+            maxBytes=10*1024*1024,
+            backupCount=10
         )
         handler.setFormatter(JSONFormatter())
         logger.addHandler(handler)

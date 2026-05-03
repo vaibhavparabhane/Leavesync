@@ -26,8 +26,8 @@ const removeCookie = (name: string): void => {
 };
 
 // Tab ID key for sessionStorage (unique per tab)
-const TAB_ID_KEY = 'nexuspulse_tab_id';
-const ACTIVE_TAB_KEY = 'nexuspulse_active_tab';
+const TAB_ID_KEY = 'leavesync_tab_id';
+const ACTIVE_TAB_KEY = 'leavesync_active_tab';
 
 interface AuthContextType {
   user: User | null;
@@ -61,9 +61,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     removeToken();
     removeStoredUser();
     removeSessionId();
-    removeCookie('nexuspulse_token');
-    removeCookie('nexuspulse_user');
-    removeCookie('nexuspulse_session_id');
+    removeCookie('leavesync_token');
+    removeCookie('leavesync_user');
+    removeCookie('leavesync_session_id');
     if (clearActiveTab) {
       localStorage.removeItem(ACTIVE_TAB_KEY);
     }
@@ -90,9 +90,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       removeToken();
       removeStoredUser();
       removeSessionId();
-      removeCookie('nexuspulse_token');
-      removeCookie('nexuspulse_user');
-      removeCookie('nexuspulse_session_id');
+      removeCookie('leavesync_token');
+      removeCookie('leavesync_user');
+      removeCookie('leavesync_session_id');
       
       const result = await AuthService.login(email, password);
       
@@ -101,10 +101,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       
       // Store token in cookies for middleware
-      const token = result.user ? sessionStorage.getItem('nexuspulse_token') : null;
+      const token = result.user ? sessionStorage.getItem('leavesync_token') : null;
       if (token) {
-        setCookie('nexuspulse_token', token, 7);
-        setCookie('nexuspulse_user', JSON.stringify(result.user), 7);
+        setCookie('leavesync_token', token, 7);
+        setCookie('leavesync_user', JSON.stringify(result.user), 7);
       }
       
       const redirectPath = AuthService.getRedirectPath(result.user.roles || []);
@@ -126,8 +126,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(prev => {
       if (!prev) return null;
       const newUser = { ...prev, ...updatedUser };
-      sessionStorage.setItem('nexuspulse_user', JSON.stringify(newUser));
-      setCookie('nexuspulse_user', JSON.stringify(newUser), 7);
+      sessionStorage.setItem('leavesync_user', JSON.stringify(newUser));
+      setCookie('leavesync_user', JSON.stringify(newUser), 7);
       return newUser;
     });
   }, []);

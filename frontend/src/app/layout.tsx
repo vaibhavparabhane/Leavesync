@@ -4,6 +4,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@/theme/theme';
 import { AuthProvider } from '@/context/AuthContext';
 
+export const metadata = {
+  title: 'LeaveSync',
+  icons: { icon: '/icon.png' },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>

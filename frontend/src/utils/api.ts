@@ -13,9 +13,9 @@ export const api = axios.create({
 });
 
 // Token storage keys
-const TOKEN_KEY = 'nexuspulse_token';
-const USER_KEY = 'nexuspulse_user';
-const SESSION_ID_KEY = 'nexuspulse_session_id';
+const TOKEN_KEY = 'leavesync_token';
+const USER_KEY = 'leavesync_user';
+const SESSION_ID_KEY = 'leavesync_session_id';
 
 // Token management
 export const getToken = (): string | null => {
@@ -214,6 +214,11 @@ export const leaveAPI = {
 
   getLeaveTypes: async () => {
     const response = await api.get('/leaves/types');
+    return response.data.data || response.data;
+  },
+
+  getMyHolidays: async () => {
+    const response = await api.get('/holidays/my');
     return response.data.data || response.data;
   },
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Drawer, AppBar, Toolbar, List, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Drawer, AppBar, Toolbar, List, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Typography, IconButton, Avatar, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import Image from 'next/image';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
@@ -19,7 +19,6 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { TYPOGRAPHY } from '@/config/typography';
 import { dashboardLayoutStyles } from '@/config/styles';
-
 const drawerWidth = 240;
 
 const menuItemsByRole = {
@@ -84,56 +83,95 @@ export default function DashboardLayout({ children, role }: DashboardLayoutProps
     setAnchorEl(null);
   };
 
+  const userInitials = user?.full_name
+    ? user.full_name.split(' ').map((n: string) => n[0]).join('').toUpperCase().slice(0, 2)
+    : 'U';
+
   const drawerContent = (
-    <>
-      <Toolbar sx={{ justifyContent: 'center', mb: 2, position: 'relative', py: 3 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      {/* Logo Section */}
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: 72,
+          px: 2.5,
+          flexShrink: 0,
+          borderBottom: '1px solid rgba(255,255,255,0.1)',
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+          <Image
+            src="/icon.png"
+            alt="LeaveSync"
+            width={36}
+            height={36}
+            style={{ objectFit: 'contain', borderRadius: 8 }}
+            priority
+          />
+          <Typography sx={{ color: '#fff', fontWeight: 700, fontSize: '1.1rem', letterSpacing: 0.3 }}>
+            LeaveSync
+          </Typography>
+        </Box>
         {isMobile && (
-          <IconButton
-            onClick={handleDrawerToggle}
-            sx={{ position: 'absolute', right: 8, color: '#ffffff' }}
-          >
-            <CloseIcon />
+          <IconButton onClick={handleDrawerToggle} size="small" sx={{ color: 'rgba(255,255,255,0.6)' }}>
+            <CloseIcon fontSize="small" />
           </IconButton>
         )}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Image
-            src="/devangles.png"
-            alt="DevAngles"
-            width={isMobile ? 140 : 180}
-            height={isMobile ? 56 : 72}
-            style={{ objectFit: 'contain' }}
-          />
-        </Box>
-      </Toolbar>
+      </Box>
 
-      <List>
-        {menuItems.map((item, index) => (
-          <ListItemButton
-            key={item.text + '-' + index}
-            selected={pathname === item.path}
-            onClick={() => router.push(item.path)}
-            sx={{
-              cursor: 'pointer',
-              py: 1.5,
-              '&.Mui-selected': {
-                backgroundColor: '#2c5282',
-              },
-              '&:hover': {
-                backgroundColor: '#2c4a6e',
-              },
-            }}
-          >
-            <ListItemIcon sx={{ color: '#ffffff', minWidth: 45 }}>{item.icon}</ListItemIcon>
-            <ListItemText 
-              primary={item.text}
-              primaryTypographyProps={{
-                sx: TYPOGRAPHY.SIDEBAR_ITEM
-              }}
-            />
-          </ListItemButton>
-        ))}
+      {/* Nav Items */}
+      <List sx={{ pt: 1, px: 1, flexGrow: 1 }}>
+        {menuItems.map((item, index) => {
+          const isActive = pathname === item.path;
+          return (
+            <Tooltip key={item.text + '-' + index} title="" placement="right">
+              <ListItemButton
+                selected={isActive}
+                onClick={() => router.push(item.path)}
+                sx={{
+                  borderRadius: 2,
+                  mb: 0.5,
+                  py: 1.2,
+                  px: 1.5,
+                  position: 'relative',
+                  backgroundColor: isActive ? 'rgba(255,255,255,0.12)' : 'transparent',
+                  '&::before': isActive ? {
+                    content: '""',
+                    position: 'absolute',
+                    left: 0,
+                    top: '20%',
+                    height: '60%',
+                    width: 3,
+                    borderRadius: '0 3px 3px 0',
+                    backgroundColor: '#60a5fa',
+                  } : {},
+                  '&:hover': { backgroundColor: 'rgba(255,255,255,0.08)' },
+                  '&.Mui-selected': { backgroundColor: 'rgba(255,255,255,0.12)' },
+                  '&.Mui-selected:hover': { backgroundColor: 'rgba(255,255,255,0.15)' },
+                }}
+              >
+                <ListItemIcon sx={{ color: isActive ? '#60a5fa' : 'rgba(255,255,255,0.7)', minWidth: 40 }}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText
+                  primary={item.text}
+                  primaryTypographyProps={{
+                    sx: {
+                      ...TYPOGRAPHY.SIDEBAR_ITEM,
+                      color: isActive ? '#ffffff' : 'rgba(255,255,255,0.75)',
+                      fontWeight: isActive ? 600 : 400,
+                      fontSize: '0.875rem',
+                    },
+                  }}
+                />
+              </ListItemButton>
+            </Tooltip>
+          );
+        })}
       </List>
-    </>
+    </Box>
   );
 
   return (
