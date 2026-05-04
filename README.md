@@ -466,11 +466,5 @@ pytest
 pytest --cov=app tests/
 ```
 
-```
 
-
-```
-
-
-```
 
